@@ -15,7 +15,9 @@ A aplicação consome os dados diretamente do endpoint aberto da prefeitura e ex
 - **Stack:** Spring Boot 3, Spring Web, Spring WebFlux, Lombok e Maven.
 - **Fonte de dados:** `https://data.sfgov.org/resource/yitu-d5am.json`.
 - **Formato de resposta:** JSON.
-- **Porta padrão:** `8080` (padrão do Spring Boot, caso não configurado diferente).
+- **Deploy:** Docker Hub + Render.
+- **URL pública (produção):** `https://sf-movies-xbea.onrender.com`.
+- **Porta local padrão:** `8080`.
 
 > Observação: os dados são externos e carregados sob demanda; a disponibilidade e o tempo de resposta dependem também da API pública de San Francisco.
 
@@ -23,11 +25,12 @@ A aplicação consome os dados diretamente do endpoint aberto da prefeitura e ex
 
 ## Endpoints
 
-Base URL local:
+As rotas abaixo funcionam tanto localmente quanto em produção.
 
-```text
-http://localhost:8080
-```
+### Base URLs
+
+- **Produção:** `https://sf-movies-xbea.onrender.com`
+- **Local:** `http://localhost:8080`
 
 ### 1) Listar filmes (com filtro opcional por título)
 
@@ -41,16 +44,22 @@ GET /movies
 
 #### Exemplos
 
-Listar todos:
+Produção (todos os filmes):
+
+```bash
+curl "https://sf-movies-xbea.onrender.com/movies"
+```
+
+Produção (filtrando por título):
+
+```bash
+curl "https://sf-movies-xbea.onrender.com/movies?t=matrix"
+```
+
+Local (todos os filmes):
 
 ```bash
 curl "http://localhost:8080/movies"
-```
-
-Filtrar por título:
-
-```bash
-curl "http://localhost:8080/movies?t=matrix"
 ```
 
 ---
@@ -72,7 +81,15 @@ GET /movies/autocomplete
 - ordena alfabeticamente;
 - limita a 10 sugestões.
 
-#### Exemplo
+#### Exemplos
+
+Produção:
+
+```bash
+curl "https://sf-movies-xbea.onrender.com/movies/autocomplete?q=sta"
+```
+
+Local:
 
 ```bash
 curl "http://localhost:8080/movies/autocomplete?q=sta"
@@ -106,7 +123,7 @@ Exemplo de objeto:
 
 ---
 
-## Como rodar o projeto
+## Como rodar o projeto localmente
 
 ### Pré-requisitos
 
@@ -136,26 +153,18 @@ mvnw.cmd spring-boot:run
 
 ### 3) Validar que subiu
 
-Abra no navegador ou use curl:
-
 ```bash
 curl "http://localhost:8080/movies"
 ```
 
 ---
 
-## Build e testes
+## Build
 
 Executar build:
 
 ```bash
 ./mvnw clean package
-```
-
-Executar testes:
-
-```bash
-./mvnw test
 ```
 
 ---
@@ -166,14 +175,6 @@ Arquivo de configuração principal:
 
 - `src/main/resources/application.properties`
 
-No estado atual, apenas o nome da aplicação está definido:
-
-```properties
-spring.application.name=sf-movies
-```
-
-Se quiser personalizar porta, logs, timeout ou outras opções, esse é o local recomendado.
-
 ---
 
 ## Pontos importantes e limitações atuais
@@ -182,6 +183,7 @@ Se quiser personalizar porta, logs, timeout ou outras opções, esse é o local 
 - Se a fonte externa estiver indisponível, as rotas podem falhar ou ficar lentas.
 - O filtro de título (`t`) usa correspondência parcial (`contains`) e não pagina o resultado.
 - O autocomplete depende dos títulos retornados pela base externa no momento da chamada.
+- Em produção (Render), pode haver latência inicial em acessos após inatividade (cold start).
 
 ---
 
