@@ -29,7 +29,7 @@ As rotas abaixo funcionam tanto localmente quanto em produção.
 
 ### Base URLs
 
-- **Produção:** `https://sf-movies-xbea.onrender.com`
+- **Produção:** `https://sf-movies-xbea.onrender.com/movies`
 - **Local:** `http://localhost:8080`
 
 ### 1) Listar filmes (com filtro opcional por título)
