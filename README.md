@@ -16,7 +16,7 @@ A aplicação consome os dados diretamente do endpoint aberto da prefeitura e ex
 - **Fonte de dados:** `https://data.sfgov.org/resource/yitu-d5am.json`.
 - **Formato de resposta:** JSON.
 - **Deploy:** Docker Hub + Render.
-- **URL pública (produção):** `https://sf-movies-xbea.onrender.com`.
+- **URL pública (produção):** `https://sf-movies-xbea.onrender.com/movies`.
 - **Porta local padrão:** `8080`.
 
 > Observação: os dados são externos e carregados sob demanda; a disponibilidade e o tempo de resposta dependem também da API pública de San Francisco.
@@ -29,7 +29,7 @@ As rotas abaixo funcionam tanto localmente quanto em produção.
 
 ### Base URLs
 
-- **Produção:** `https://sf-movies-xbea.onrender.com/movies`
+- **Produção:** `https://sf-movies-xbea.onrender.com`
 - **Local:** `http://localhost:8080`
 
 ### 1) Listar filmes (com filtro opcional por título)
